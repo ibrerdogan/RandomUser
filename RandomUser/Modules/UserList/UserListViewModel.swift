@@ -13,11 +13,12 @@ protocol UserListViewModelProtocol: AnyObject {
 final class UserListViewModel {
     private var apiClient: APIClient
     private var users = [User]()
+    private var filteredUsers = [User]()
     private var currentPage: Int = 1
     private var loadingMore: Bool = false
     weak var delegate: UserListViewModelProtocol?
     weak var coordinator: UserListCoordinator?
-    
+    private var isSearching: Bool = false
     
     
     init(apiClient: APIClient) {
@@ -49,7 +50,7 @@ final class UserListViewModel {
     }
     
     func checkCanLoadMore() -> Bool {
-        !loadingMore
+        !loadingMore && !isSearching
     }
     
     func completedLoadingMore() {
@@ -63,10 +64,31 @@ final class UserListViewModel {
     }
     
     func getUserCount() -> Int {
-        users.count
+        isSearching ? filteredUsers.count : users.count
     }
     
     func getUser(for indexPath: IndexPath) -> User {
-        users[indexPath.row]
+        isSearching ? filteredUsers[indexPath.row] :  users[indexPath.row]
+    }
+    
+    func setMakingSearch(isSearching: Bool) {
+        if !isSearching {
+            filteredUsers.removeAll()
+            delegate?.updateList(with: users)
+        }
+        self.isSearching = isSearching
+    }
+    
+    func searchgingIsProgress() -> Bool {
+        isSearching
+    }
+    
+    func searchForName(for searchText: String) {
+        filteredUsers = users.filter {
+            ($0.name.first + " " + $0.name.last)
+                .lowercased()
+                .contains(searchText.lowercased())
+        }
+        delegate?.updateList(with: filteredUsers)
     }
 }

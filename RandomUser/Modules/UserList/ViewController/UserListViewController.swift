@@ -137,17 +137,10 @@ extension UserListViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension UserListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-       // isSearching = !searchText.isEmpty
-       // if isSearching {
-       //     filteredUsers = users.filter {
-       //         ($0.name.first + " " + $0.name.last)
-       //             .lowercased()
-       //             .contains(searchText.lowercased())
-       //     }
-       // } else {
-       //     filteredUsers = users
-       // }
-       // tableView.reloadData()
+        viewModel.setMakingSearch(isSearching: !searchText.isEmpty)
+        if viewModel.searchgingIsProgress() {
+            viewModel.searchForName(for: searchText)
+        }
     }
 }
 
