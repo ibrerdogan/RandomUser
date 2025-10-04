@@ -34,11 +34,19 @@ final class UserListViewController: UIViewController {
         searchBar.placeholder = "Search users by name"
         return searchBar
     }()
+    
+    private lazy var footerActivityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.frame = CGRect(x: 0, y: 0, width: userListTableView.bounds.width, height: 44)
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
    
     override func viewDidLoad() {
         title = "User List"
         view.backgroundColor = .white
         viewModel.delegate = self
+        viewModel.fetchUsers()
         view.addSubview(searchBar)
         view.addSubview(userListTableView)
         view.addSubview(activityIndicator)
@@ -51,49 +59,70 @@ final class UserListViewController: UIViewController {
             userListTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             userListTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             userListTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            userListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            userListTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        viewModel.fetchUsers(for: 1)
+    private func loadMoreUsers() {
+        guard viewModel.checkCanLoadMore() else {return}
+        userListTableView.tableFooterView = footerActivityIndicator
+        footerActivityIndicator.startAnimating()
+        viewModel.loadMoreUsers()
     }
     
-
 }
 extension UserListViewController: UserListViewModelProtocol {
+    func addNewUsers(with newUsers: [User]) {
+        let startIndex = viewModel.getUserCount() - newUsers.count
+        let endIndex = viewModel.getUserCount() - 1
+        
+        var indexPaths: [IndexPath] = []
+        for index in startIndex...endIndex {
+            indexPaths.append(IndexPath(row: index, section: 0))
+        }
+        
+        DispatchQueue.main.async {[weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.userListTableView.performBatchUpdates({
+                strongSelf.userListTableView.insertRows(at: indexPaths, with: .automatic)
+            }) {[weak self] status in
+                guard let strongSelf = self else {return}
+                strongSelf.viewModel.completedLoadingMore()
+            }
+        }
+    }
+    
     func updateList(with users: [User]) {
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else {return}
             strongSelf.userListTableView.reloadData()
         }
     }
+    
+    
 }
 
 extension UserListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.users.count
+        viewModel.getUserCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = userListTableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserCell {
-            cell.configure(with: viewModel.users[indexPath.row])
+            cell.configure(with: viewModel.getUser(for: indexPath))
             return cell
         }
         return UITableViewCell()
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let frameHeight = scrollView.frame.size.height
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastRowIndex = viewModel.getUserCount() - 1
         
-        if offsetY > contentHeight - frameHeight * 2 {
-            //currentPage += 1
-            //fetchUsers(page: currentPage)
+        if indexPath.row >= lastRowIndex - 3 {
+            loadMoreUsers()
         }
     }
     
