@@ -17,6 +17,8 @@ final class UserListViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UserCell.self, forCellReuseIdentifier: "UserCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -112,7 +114,7 @@ extension UserListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = userListTableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserCell {
-            cell.configure(with: viewModel.getUser(for: indexPath))
+            cell.configure(with: viewModel.getUser(for: indexPath),bookmarked: true)
             return cell
         }
         return UITableViewCell()
@@ -150,38 +152,127 @@ extension UserListViewController: UISearchBarDelegate {
 }
 
 
-final class UserCell: UITableViewCell {
+
+class UserCell: UITableViewCell {
     
-    private let nameLabel = UILabel()
-    private let emailLabel = UILabel()
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 12
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowRadius = 4
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let avatarImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 25
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.textColor = .black
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let usernameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .darkGray
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let bookmarkButton: UIButton = {
+        let button = UIButton(type: .system)
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+        let image = UIImage(systemName: "bookmark", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.tintColor = .gray
+        return button
+    }()
+    
+    private lazy var textStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [nameLabel, usernameLabel])
+        stack.axis = .vertical
+        stack.spacing = 2
+        return stack
+    }()
+    
+    private lazy var mainStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [avatarImageView, textStack, bookmarkButton])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.spacing = 12
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        let stack = UIStackView(arrangedSubviews: [nameLabel, emailLabel])
-        stack.axis = .vertical
-        stack.spacing = 4
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(stack)
-        
-        NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-        ])
-        
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        emailLabel.font = UIFont.systemFont(ofSize: 14)
-        emailLabel.textColor = .secondaryLabel
+        backgroundColor = .clear
+        selectionStyle = .none
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupViews()
     }
     
-    func configure(with user: User) {
-        nameLabel.text = "\(user.name.first) \(user.name.last)"
-        emailLabel.text = user.email
+    private func setupViews() {
+        contentView.addSubview(containerView)
+        containerView.addSubview(mainStack)
+        
+        NSLayoutConstraint.activate([
+           
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            
+            mainStack.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            mainStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            mainStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            mainStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
+            
+            avatarImageView.widthAnchor.constraint(equalToConstant: 50),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 50),
+            
+            bookmarkButton.widthAnchor.constraint(equalToConstant: 30),
+            bookmarkButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    func configure(with user: User, bookmarked: Bool) {
+        nameLabel.text = user.name.first
+        usernameLabel.text = "@\(user.login.username)"
+        loadImage(from: user.picture.medium)
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+        let iconName = bookmarked ? "bookmark.fill" : "bookmark"
+        let image = UIImage(systemName: iconName, withConfiguration: config)
+        bookmarkButton.setImage(image, for: .normal)
+    }
+    
+    private func loadImage(from urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            DispatchQueue.main.async {
+                self?.avatarImageView.image = UIImage(data: data)
+            }
+        }.resume()
     }
 }
