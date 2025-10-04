@@ -31,6 +31,7 @@
 		7F95951D2E91567A008A7B3D /* InfoRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95951C2E91567A008A7B3D /* InfoRowView.swift */; };
 		7F95951F2E915E99008A7B3D /* MapViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95951E2E915E99008A7B3D /* MapViewContainer.swift */; };
 		7F9595212E916046008A7B3D /* UserDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595202E916046008A7B3D /* UserDetailViewModel.swift */; };
+		7F9595262E916813008A7B3D /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595252E916813008A7B3D /* LocalStorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		7F95951C2E91567A008A7B3D /* InfoRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoRowView.swift; sourceTree = "<group>"; };
 		7F95951E2E915E99008A7B3D /* MapViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewContainer.swift; sourceTree = "<group>"; };
 		7F9595202E916046008A7B3D /* UserDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewModel.swift; sourceTree = "<group>"; };
+		7F9595252E916813008A7B3D /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 		7F5AAEEA2E8F03610080686D /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				7F9595252E916813008A7B3D /* LocalStorageManager.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -241,9 +244,9 @@
 		7F5AAEF02E8F04930080686D /* UserDetail */ = {
 			isa = PBXGroup;
 			children = (
+				7F9595222E9165A7008A7B3D /* ViewModel */,
 				7F9595152E9155D0008A7B3D /* Views */,
 				7F5AAEF32E8F04AB0080686D /* ViewController */,
-				7F9595202E916046008A7B3D /* UserDetailViewModel.swift */,
 			);
 			path = UserDetail;
 			sourceTree = "<group>";
@@ -306,6 +309,14 @@
 				7F95951E2E915E99008A7B3D /* MapViewContainer.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7F9595222E9165A7008A7B3D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7F9595202E916046008A7B3D /* UserDetailViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -443,6 +454,7 @@
 				7F5AAEFA2E8F05080080686D /* BookmarksViewController.swift in Sources */,
 				7F5AAEF62E8F04C40080686D /* UserListViewController.swift in Sources */,
 				7F5AAEEE2E8F04530080686D /* Coordinator.swift in Sources */,
+				7F9595262E916813008A7B3D /* LocalStorageManager.swift in Sources */,
 				7F5AAEF82E8F04EC0080686D /* UserDetailViewController.swift in Sources */,
 				7F5AAEFC2E8F052E0080686D /* AppCoordinator.swift in Sources */,
 				7F5AAEB82E8F02620080686D /* ViewController.swift in Sources */,

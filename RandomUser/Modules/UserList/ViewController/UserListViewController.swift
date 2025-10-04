@@ -8,7 +8,7 @@
 import UIKit
 
 final class UserListViewController: UIViewController {
-    var viewModel = UserListViewModel(apiClient: APIClient.shared)
+    var viewModel = UserListViewModel(apiClient: APIClient.shared, localStorageManager: LocalStorageManager())
     
     private lazy var userListTableView: UITableView = {
         let tableView = UITableView()
@@ -114,7 +114,8 @@ extension UserListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = userListTableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserCell {
-            cell.configure(with: viewModel.getUser(for: indexPath),bookmarked: true)
+            cell.configure(with: viewModel.getUser(for: indexPath),bookmarked: viewModel.isBookmarked(for: indexPath))
+            cell.delegate = self
             return cell
         }
         return UITableViewCell()
@@ -144,10 +145,20 @@ extension UserListViewController: UISearchBarDelegate {
     }
 }
 
+extension UserListViewController: UserCellProtocol {
+    func bookmarkTapped(for user: User) {
+        viewModel.manageUserBookMark(for: user)
+    }
+}
 
+protocol UserCellProtocol:AnyObject {
+    func bookmarkTapped(for user: User)
+}
 
 class UserCell: UITableViewCell {
-    
+    weak var delegate: UserCellProtocol?
+    private var user: User?
+    private var isBookmarked: Bool = false
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -191,6 +202,7 @@ class UserCell: UITableViewCell {
         let image = UIImage(systemName: "bookmark", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .gray
+        button.addTarget(self, action: #selector(bookmarkTapped), for: .touchUpInside)
         return button
     }()
     
@@ -247,12 +259,25 @@ class UserCell: UITableViewCell {
     }
     
     func configure(with user: User, bookmarked: Bool) {
+        self.user = user
+        self.isBookmarked = bookmarked
         nameLabel.text = user.name.first
         usernameLabel.text = "@\(user.login.username)"
         loadImage(from: user.picture.medium)
-        
+        configureBookmarkButton()
+    }
+    
+    @objc
+    func bookmarkTapped() {
+        guard let user = user else {return}
+        delegate?.bookmarkTapped(for: user)
+        isBookmarked.toggle()
+        configureBookmarkButton()
+    }
+    
+    private func configureBookmarkButton() {
         let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
-        let iconName = bookmarked ? "bookmark.fill" : "bookmark"
+        let iconName = isBookmarked ? "bookmark.fill" : "bookmark"
         let image = UIImage(systemName: iconName, withConfiguration: config)
         bookmarkButton.setImage(image, for: .normal)
     }

@@ -12,6 +12,7 @@ protocol UserListViewModelProtocol: AnyObject {
 }
 final class UserListViewModel {
     private var apiClient: APIClient
+    private var localStorageManager: LocalStorageManager
     private var users = [User]()
     private var filteredUsers = [User]()
     private var currentPage: Int = 1
@@ -21,8 +22,9 @@ final class UserListViewModel {
     private var isSearching: Bool = false
     
     
-    init(apiClient: APIClient) {
+    init(apiClient: APIClient, localStorageManager: LocalStorageManager) {
         self.apiClient = apiClient
+        self.localStorageManager = localStorageManager
     }
     
     func fetchUsers() {
@@ -90,5 +92,13 @@ final class UserListViewModel {
                 .contains(searchText.lowercased())
         }
         delegate?.updateList(with: filteredUsers)
+    }
+    
+    func manageUserBookMark(for user: User) {
+        localStorageManager.manageUserBookMark(for: user)
+    }
+    
+    func isBookmarked(for indexPath: IndexPath) -> Bool {
+        localStorageManager.userExists(for: isSearching ? filteredUsers[indexPath.row] :  users[indexPath.row])
     }
 }
