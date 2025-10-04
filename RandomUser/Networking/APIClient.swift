@@ -8,9 +8,6 @@
 import Foundation
 
 final class APIClient {
-    static let shared = APIClient()
-    private init() {}
-    
     private let session = URLSession.shared
     
     func request<T: Codable>(

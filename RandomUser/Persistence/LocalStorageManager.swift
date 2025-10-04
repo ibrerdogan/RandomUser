@@ -7,16 +7,21 @@
 
 import Foundation
 
+protocol LocalStorageProtocol: AnyObject {
+    func changed()
+}
+
 final class LocalStorageManager {
     private let userDefaults = UserDefaults.standard
     private let usersKey = "SavedUsers"
-    
+    weak var delegate: LocalStorageProtocol?
     func manageUserBookMark(for user: User) {
         if userExists(for: user) {
             removeUser(user)
         } else {
             addUser(user)
         }
+        delegate?.changed()
             
     }
     

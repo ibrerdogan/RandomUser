@@ -8,7 +8,7 @@
 import UIKit
 
 final class UserListViewController: UIViewController {
-    var viewModel = UserListViewModel(apiClient: APIClient.shared, localStorageManager: LocalStorageManager())
+    var viewModel: UserListViewModel
     
     private lazy var userListTableView: UITableView = {
         let tableView = UITableView()
@@ -43,7 +43,15 @@ final class UserListViewController: UIViewController {
         indicator.hidesWhenStopped = true
         return indicator
     }()
-   
+    
+    init(viewModel: UserListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         title = "User List"
         view.backgroundColor = .white

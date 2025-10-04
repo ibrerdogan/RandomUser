@@ -6,11 +6,16 @@
 //
 
 import Foundation
-
+protocol BookmarksViewModelProtocol: AnyObject {
+    func updateUI()
+}
 final class BookmarksViewModel {
+    weak var coordinator: BookmarksCoordinator?
+    weak var delegate: BookmarksViewModelProtocol?
     private var localStorageManager: LocalStorageManager
     init(localStorageManager: LocalStorageManager) {
         self.localStorageManager = localStorageManager
+        localStorageManager.delegate = self
     }
     
     func getUserCount() -> Int {
@@ -25,5 +30,10 @@ final class BookmarksViewModel {
         localStorageManager.manageUserBookMark(for: user)
     }
     
-    
+}
+
+extension BookmarksViewModel: LocalStorageProtocol {
+    func changed() {
+        delegate?.updateUI()
+    }
 }

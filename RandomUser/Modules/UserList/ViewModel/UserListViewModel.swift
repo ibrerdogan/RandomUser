@@ -17,6 +17,7 @@ final class UserListViewModel {
     private var filteredUsers = [User]()
     private var currentPage: Int = 1
     private var loadingMore: Bool = false
+    
     weak var delegate: UserListViewModelProtocol?
     weak var coordinator: UserListCoordinator?
     private var isSearching: Bool = false

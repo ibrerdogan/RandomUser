@@ -28,7 +28,7 @@ class AppCoordinator: Coordinator {
     func start() {
         // Users flow
         let usersNav = UINavigationController()
-        usersCoordinator = UserListCoordinator(navigationController: usersNav)
+        usersCoordinator = UserListCoordinator(navigationController: usersNav, localStorageManager: localStorageManager)
         usersCoordinator.start()
         usersNav.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person.3"), tag: 0)
         

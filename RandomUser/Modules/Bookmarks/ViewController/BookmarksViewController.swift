@@ -27,6 +27,7 @@ final class BookmarksViewController: UIViewController {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        viewModel.delegate = self
     }
     
     
@@ -63,7 +64,6 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
-   
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         coordinator?.showUserDetail(user: viewModel.getUser(for: indexPath))
     }
@@ -73,6 +73,15 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
 extension BookmarksViewController: UserCellProtocol {
     func bookmarkTapped(for user: User) {
         viewModel.manageUserBookMark(for: user)
+        DispatchQueue.main.async {[weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.userListTableView.reloadData()
+        }
+    }
+}
+
+extension BookmarksViewController: BookmarksViewModelProtocol {
+    func updateUI() {
         DispatchQueue.main.async {[weak self] in
             guard let strongSelf = self else {return}
             strongSelf.userListTableView.reloadData()
