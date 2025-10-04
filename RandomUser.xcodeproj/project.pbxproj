@@ -21,6 +21,10 @@
 		7F5AAEFC2E8F052E0080686D /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5AAEFB2E8F052E0080686D /* AppCoordinator.swift */; };
 		7F5AAEFE2E8F054C0080686D /* UserListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5AAEFD2E8F054C0080686D /* UserListCoordinator.swift */; };
 		7F5AAF002E8F05820080686D /* BookmarksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5AAEFF2E8F05820080686D /* BookmarksCoordinator.swift */; };
+		7F5AAF022E8F10530080686D /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5AAF012E8F10530080686D /* Endpoint.swift */; };
+		7F5AAF042E8F10720080686D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5AAF032E8F10720080686D /* APIClient.swift */; };
+		7F5AAF072E8F10C90080686D /* RandomUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5AAF062E8F10C90080686D /* RandomUserResponseModel.swift */; };
+		7F5BD6CF2E8FA14000F09781 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5BD6CE2E8FA14000F09781 /* UserListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +63,10 @@
 		7F5AAEFB2E8F052E0080686D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		7F5AAEFD2E8F054C0080686D /* UserListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCoordinator.swift; sourceTree = "<group>"; };
 		7F5AAEFF2E8F05820080686D /* BookmarksCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCoordinator.swift; sourceTree = "<group>"; };
+		7F5AAF012E8F10530080686D /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		7F5AAF032E8F10720080686D /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		7F5AAF062E8F10C90080686D /* RandomUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomUserResponseModel.swift; sourceTree = "<group>"; };
+		7F5BD6CE2E8FA14000F09781 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +160,7 @@
 		7F5AAEE42E8F02AC0080686D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7F5AAF052E8F10B50080686D /* DTO */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -178,6 +187,8 @@
 		7F5AAEE92E8F03570080686D /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				7F5AAF012E8F10530080686D /* Endpoint.swift */,
+				7F5AAF032E8F10720080686D /* APIClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -210,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				7F5AAEF22E8F04A40080686D /* ViewController */,
+				7F5BD6CE2E8FA14000F09781 /* UserListViewModel.swift */,
 			);
 			path = UserList;
 			sourceTree = "<group>";
@@ -252,6 +264,14 @@
 				7F5AAEF92E8F05080080686D /* BookmarksViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7F5AAF052E8F10B50080686D /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				7F5AAF062E8F10C90080686D /* RandomUserResponseModel.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,7 +412,11 @@
 				7F5AAEB82E8F02620080686D /* ViewController.swift in Sources */,
 				7F5AAEFE2E8F054C0080686D /* UserListCoordinator.swift in Sources */,
 				7F5AAEB42E8F02620080686D /* AppDelegate.swift in Sources */,
+				7F5BD6CF2E8FA14000F09781 /* UserListViewModel.swift in Sources */,
+				7F5AAF072E8F10C90080686D /* RandomUserResponseModel.swift in Sources */,
+				7F5AAF022E8F10530080686D /* Endpoint.swift in Sources */,
 				7F5AAEB62E8F02620080686D /* SceneDelegate.swift in Sources */,
+				7F5AAF042E8F10720080686D /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,7 +505,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -538,7 +562,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

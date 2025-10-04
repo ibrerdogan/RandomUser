@@ -17,7 +17,7 @@ class UserListCoordinator: Coordinator {
     
     func start() {
         let vc = UserListViewController()
-        vc.coordinator = self
+        vc.viewModel.coordinator = self
         navigationController.pushViewController(vc, animated: false)
     }
     
