@@ -31,6 +31,6 @@ final class BookmarksViewController: UIViewController {
     
     @objc
     func goToDetails() {
-        coordinator?.showUserDetail()
+       
     }
 }

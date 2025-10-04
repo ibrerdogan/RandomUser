@@ -129,7 +129,7 @@ extension UserListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
+        viewModel.coordinator?.showUserDetail(with: viewModel.getUser(for: indexPath))
     }
     
     
