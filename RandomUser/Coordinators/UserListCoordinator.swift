@@ -26,7 +26,7 @@ class UserListCoordinator: Coordinator {
     }
     
     func showUserDetail(with user: User) {
-        let viewModel = UserDetailViewModel(user: user)
+        let viewModel = UserDetailViewModel(user: user, localStorageManager: localStorageManager)
         let detailVC = UserDetailViewController(viewModel: viewModel)
         detailVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(detailVC, animated: true)

@@ -25,7 +25,7 @@ class BookmarksCoordinator: Coordinator {
     }
     
     func showUserDetail(user: User) {
-        let viewModel = UserDetailViewModel(user: user)
+        let viewModel = UserDetailViewModel(user: user,localStorageManager: localStorageManager)
         let detailVC = UserDetailViewController(viewModel: viewModel)
         detailVC.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(detailVC, animated: true)

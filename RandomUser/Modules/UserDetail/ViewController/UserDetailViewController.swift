@@ -39,11 +39,11 @@ final class UserDetailViewController: UIViewController {
     }()
     
     private lazy var contactTitleLabel: UILabel = {
-        let l = UILabel()
-        l.text = "Contact Information"
-        l.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        l.textColor = UIColor(white: 0.25, alpha: 1)
-        return l
+        let label = UILabel()
+        label.text = "Contact Information"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.textColor = UIColor(white: 0.25, alpha: 1)
+        return label
     }()
     
     private lazy var contactCard: ContactCardView = {
@@ -60,6 +60,13 @@ final class UserDetailViewController: UIViewController {
         return label
     }()
     
+    private lazy var bookmarkButton: BookmarkButton = {
+        let button = BookmarkButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.configure(isBookmarked: viewModel.isBookmarked())
+        return button
+    }()
+    
     private lazy var addressCard: AddressCardView = {
         let addressView = AddressCardView(with: viewModel.user)
         addressView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,11 +79,11 @@ final class UserDetailViewController: UIViewController {
         return mapView
     }()
     
-    // MARK: - Init
+
     init(viewModel: UserDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-
+            
         guard let latitude = viewModel.createCoordinaate().0, let longitude = viewModel.createCoordinaate().1 else {return}
         mapViewContainer.configure(latitude: latitude,
                                    longitude: longitude)
@@ -88,6 +95,18 @@ final class UserDetailViewController: UIViewController {
         view.backgroundColor = UIColor(red: 245/255, green: 246/255, blue: 248/255, alpha: 1) 
         setupScrollAndStack()
         populateStack()
+        setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
+        let barButtonItem = UIBarButtonItem(customView: bookmarkButton)
+        navigationItem.rightBarButtonItem = barButtonItem
+        
+        bookmarkButton.onTap = { [weak self] isBookmarked in
+            guard let strongSelf = self else {return}
+            strongSelf.viewModel.manageBookmark()
+            
+        }
     }
     
     private func setupScrollAndStack() {

@@ -167,7 +167,7 @@ class UserCell: UITableViewCell {
     weak var delegate: UserCellProtocol?
     private var user: User?
     private var isBookmarked: Bool = false
-    private let containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 12
@@ -179,7 +179,7 @@ class UserCell: UITableViewCell {
         return view
     }()
     
-    private let avatarImageView: UIImageView = {
+    private lazy var avatarImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -188,7 +188,7 @@ class UserCell: UITableViewCell {
         return iv
     }()
     
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         label.textColor = .black
@@ -196,7 +196,7 @@ class UserCell: UITableViewCell {
         return label
     }()
     
-    private let usernameLabel: UILabel = {
+    private lazy var usernameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .darkGray
@@ -204,13 +204,9 @@ class UserCell: UITableViewCell {
         return label
     }()
     
-    private let bookmarkButton: UIButton = {
-        let button = UIButton(type: .system)
-        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
-        let image = UIImage(systemName: "bookmark", withConfiguration: config)
-        button.setImage(image, for: .normal)
-        button.tintColor = .gray
-        button.addTarget(self, action: #selector(bookmarkTapped), for: .touchUpInside)
+    private lazy var bookmarkButton: BookmarkButton = {
+        let button = BookmarkButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -235,6 +231,10 @@ class UserCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
         setupViews()
+        bookmarkButton.onTap = { [weak self] isBookmarked in
+            guard let strongSelf = self else {return}
+            strongSelf.bookmarkTapped()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -272,10 +272,9 @@ class UserCell: UITableViewCell {
         nameLabel.text = user.name.first
         usernameLabel.text = "@\(user.login.username)"
         loadImage(from: user.picture.medium)
-        configureBookmarkButton()
+        bookmarkButton.configure(isBookmarked: isBookmarked)
     }
     
-    @objc
     func bookmarkTapped() {
         guard let user = user else {return}
         delegate?.bookmarkTapped(for: user)

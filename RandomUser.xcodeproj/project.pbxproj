@@ -33,6 +33,7 @@
 		7F9595212E916046008A7B3D /* UserDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595202E916046008A7B3D /* UserDetailViewModel.swift */; };
 		7F9595262E916813008A7B3D /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595252E916813008A7B3D /* LocalStorageManager.swift */; };
 		7F9595282E916DF4008A7B3D /* BookmarksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595272E916DF4008A7B3D /* BookmarksViewModel.swift */; };
+		7F95952C2E91A540008A7B3D /* BookmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95952B2E91A540008A7B3D /* BookmarkButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		7F9595202E916046008A7B3D /* UserDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewModel.swift; sourceTree = "<group>"; };
 		7F9595252E916813008A7B3D /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
 		7F9595272E916DF4008A7B3D /* BookmarksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewModel.swift; sourceTree = "<group>"; };
+		7F95952B2E91A540008A7B3D /* BookmarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 		7F5AAEEC2E8F037C0080686D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				7F95952A2E91A533008A7B3D /* CustomViews */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -328,6 +331,14 @@
 				7F9595272E916DF4008A7B3D /* BookmarksViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7F95952A2E91A533008A7B3D /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				7F95952B2E91A540008A7B3D /* BookmarkButton.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -480,6 +491,7 @@
 				7F5AAF022E8F10530080686D /* Endpoint.swift in Sources */,
 				7F5AAEB62E8F02620080686D /* SceneDelegate.swift in Sources */,
 				7F5AAF042E8F10720080686D /* APIClient.swift in Sources */,
+				7F95952C2E91A540008A7B3D /* BookmarkButton.swift in Sources */,
 				7F95951B2E915658008A7B3D /* ContactCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
