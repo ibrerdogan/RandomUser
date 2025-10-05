@@ -12,9 +12,8 @@ class AppCoordinator: Coordinator {
     var window: UIWindow
     var navigationController: UINavigationController
     var tabBarController: UITabBarController
-    private var localStorageManager = LocalStorageManager()
+    var localStorageManager: LocalStorageManager
     
-    // Child coordinators
     private var usersCoordinator: UserListCoordinator!
     private var bookmarksCoordinator: BookmarksCoordinator!
     
@@ -22,23 +21,21 @@ class AppCoordinator: Coordinator {
         self.window = window
         self.navigationController = UINavigationController()
         self.tabBarController = UITabBarController()
+        self.localStorageManager = LocalStorageManager()
         
     }
     
     func start() {
-        // Users flow
         let usersNav = UINavigationController()
         usersCoordinator = UserListCoordinator(navigationController: usersNav, localStorageManager: localStorageManager)
         usersCoordinator.start()
         usersNav.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person.3"), tag: 0)
         
-        // Bookmarks flow
         let bookmarksNav = UINavigationController()
         bookmarksCoordinator = BookmarksCoordinator(navigationController: bookmarksNav,localStorageManager: localStorageManager)
         bookmarksCoordinator.start()
         bookmarksNav.tabBarItem = UITabBarItem(title: "Bookmarks", image: UIImage(systemName: "bookmark"), tag: 1)
         
-        // Setup TabBar
         tabBarController.viewControllers = [usersNav, bookmarksNav]
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()

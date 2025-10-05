@@ -11,14 +11,15 @@ import UIKit
 class UserListCoordinator: Coordinator {
     var navigationController: UINavigationController
     var localStorageManager: LocalStorageManager
+    private var apiClient: APIClient
     
     init(navigationController: UINavigationController, localStorageManager: LocalStorageManager) {
         self.navigationController = navigationController
         self.localStorageManager = localStorageManager
+        self.apiClient = APIClient()
     }
     
     func start() {
-        let apiClient = APIClient()
         let viewModel = UserListViewModel(apiClient: apiClient, localStorageManager: localStorageManager)
         let vc = UserListViewController(viewModel: viewModel)
         vc.viewModel.coordinator = self
