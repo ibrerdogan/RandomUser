@@ -9,6 +9,7 @@ import Foundation
 protocol UserListViewModelProtocol: AnyObject {
     func updateList(with users: [User])
     func addNewUsers(with newUsers: [User])
+    func changedUserBookmarkStatus(for user: User, in indexPath: IndexPath)
 }
 final class UserListViewModel {
     private var apiClient: APIClient
@@ -17,15 +18,20 @@ final class UserListViewModel {
     private var filteredUsers = [User]()
     private var currentPage: Int = 1
     private var loadingMore: Bool = false
+    private var isSearching: Bool = false
     
     weak var delegate: UserListViewModelProtocol?
     weak var coordinator: UserListCoordinator?
-    private var isSearching: Bool = false
     
     
     init(apiClient: APIClient, localStorageManager: LocalStorageManager) {
         self.apiClient = apiClient
         self.localStorageManager = localStorageManager
+        setupObservers()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func fetchUsers() {
@@ -63,7 +69,6 @@ final class UserListViewModel {
     func loadMoreUsers() {
         loadingMore = true
         fetchUsers()
-        
     }
     
     func getUserCount() -> Int {
@@ -102,4 +107,24 @@ final class UserListViewModel {
     func isBookmarked(for indexPath: IndexPath) -> Bool {
         localStorageManager.userExists(for: isSearching ? filteredUsers[indexPath.row] :  users[indexPath.row])
     }
+    
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleBookmarkStatusChange(_:)),
+            name: .userBookmarkStatusChanged,
+            object: nil
+        )
+    }
+    
+    @objc
+    private func handleBookmarkStatusChange(_ notification: Notification) {
+        guard let user = notification.userInfo?["user"] as? User else { return }
+        if let index = users.firstIndex(where: { $0.login.uuid == user.login.uuid }) {
+            users[index] = user
+            let indexPath = IndexPath(row: index, section: 0)
+            delegate?.changedUserBookmarkStatus(for: user, in: indexPath)
+        }
+    }
+
 }

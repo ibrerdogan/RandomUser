@@ -127,8 +127,6 @@ class UserCell: UITableViewCell {
     func bookmarkTapped() {
         guard let user = user else {return}
         delegate?.bookmarkTapped(for: user)
-        isBookmarked.toggle()
-        configureBookmarkButton()
     }
     
     private func configureBookmarkButton() {

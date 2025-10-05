@@ -7,6 +7,12 @@
 
 import Foundation
 extension UserListViewController: UserListViewModelProtocol {
+    func changedUserBookmarkStatus(for user: User, in indexPath: IndexPath) {
+        if let cell = userListTableView.cellForRow(at: indexPath) as? UserCell {
+            cell.configure(with: user, bookmarked: viewModel.isBookmarked(for: indexPath))
+        }
+    }
+    
     func addNewUsers(with newUsers: [User]) {
         let startIndex = viewModel.getUserCount() - newUsers.count
         let endIndex = viewModel.getUserCount() - 1
