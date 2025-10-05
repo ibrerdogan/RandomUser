@@ -11,6 +11,7 @@ protocol UserListViewModelProtocol: AnyObject {
     func addNewUsers(with newUsers: [User])
     func changedUserBookmarkStatus(for user: User, in indexPath: IndexPath)
 }
+
 final class UserListViewModel {
     private var apiClient: APIClient
     private var localStorageManager: LocalStorageManager

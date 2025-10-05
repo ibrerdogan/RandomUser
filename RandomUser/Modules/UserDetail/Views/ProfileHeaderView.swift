@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 final class ProfileHeaderView: UIView {
-    private let avatarContainer: UIView = {
+    private lazy var avatarContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -21,7 +21,7 @@ final class ProfileHeaderView: UIView {
         return view
     }()
     
-    private let avatarImageView: UIImageView = {
+    private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 50 / 2
@@ -30,7 +30,7 @@ final class ProfileHeaderView: UIView {
         return imageView
     }()
     
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 26, weight: .bold)
         label.textAlignment = .center
@@ -38,7 +38,7 @@ final class ProfileHeaderView: UIView {
         return label
     }()
     
-    private let memberSinceLabel: UILabel = {
+    private lazy var memberSinceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = UIColor(white: 0.45, alpha: 1)
@@ -63,7 +63,10 @@ final class ProfileHeaderView: UIView {
         nameLabel.text = "\(user.name.first) \(user.name.last)"
         memberSinceLabel.text = "Member since: \(formatDate(from: user.registered.date))"
     }
-    required init?(coder: NSCoder) { fatalError() }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
     private func setupViews() {
         addSubview(vStack)

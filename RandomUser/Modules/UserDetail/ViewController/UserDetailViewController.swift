@@ -10,14 +10,14 @@ import UIKit
 final class UserDetailViewController: UIViewController {
     var viewModel: UserDetailViewModel
     
-    private let scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.alwaysBounceVertical = true
         return scrollView
     }()
     
-    private let contentView: UIView = {
+    private lazy var contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

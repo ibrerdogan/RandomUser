@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 final class InfoRowView: UIView {
-    private let iconContainer: UIView = {
+    private lazy var iconContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 20
@@ -18,7 +18,7 @@ final class InfoRowView: UIView {
         return view
     }()
     
-    private let iconImageView: UIImageView = {
+    private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = UIColor(red: 35/255, green: 100/255, blue: 220/255, alpha: 1)
@@ -26,14 +26,14 @@ final class InfoRowView: UIView {
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor(white: 0.4, alpha: 1)
         return label
     }()
     
-    private let detailLabel: UILabel = {
+    private lazy var detailLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textColor = UIColor(white: 0.07, alpha: 1)
@@ -58,7 +58,7 @@ final class InfoRowView: UIView {
         return stackView
     }()
     
-    private let separator: UIView = {
+    private lazy var separator: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.9, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +71,10 @@ final class InfoRowView: UIView {
         setupViews()
         configure(iconSystemName: iconSystemName, title: title, detail: detail, showsSeparator: showsSeparator)
     }
-    required init?(coder: NSCoder) { fatalError("init(coder:) not implemented") }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) not implemented")
+    }
     
     private func setupViews() {
         addSubview(mainStack)

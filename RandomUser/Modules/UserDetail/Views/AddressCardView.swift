@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 final class AddressCardView: UIView {
-    private let cardView: UIView = {
+    private lazy var cardView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 14
@@ -26,7 +26,10 @@ final class AddressCardView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         setupViews(user: user)
     }
-    required init?(coder: NSCoder) { fatalError() }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
     private func setupViews(user: User) {
         addSubview(cardView)
