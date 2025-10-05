@@ -34,6 +34,12 @@
 		7F9595262E916813008A7B3D /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595252E916813008A7B3D /* LocalStorageManager.swift */; };
 		7F9595282E916DF4008A7B3D /* BookmarksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595272E916DF4008A7B3D /* BookmarksViewModel.swift */; };
 		7F95952C2E91A540008A7B3D /* BookmarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95952B2E91A540008A7B3D /* BookmarkButton.swift */; };
+		7F95952F2E925DBC008A7B3D /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95952E2E925DBC008A7B3D /* UIView+Extensions.swift */; };
+		7F9595322E925ED0008A7B3D /* UserListViewController+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595312E925ED0008A7B3D /* UserListViewController+ViewModel.swift */; };
+		7F9595342E925F05008A7B3D /* UserListViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595332E925F05008A7B3D /* UserListViewController+UITableView.swift */; };
+		7F9595362E925F5F008A7B3D /* UserListViewController+UISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9595352E925F5F008A7B3D /* UserListViewController+UISearchBar.swift */; };
+		7F95953B2E925FA1008A7B3D /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95953A2E925FA1008A7B3D /* UserCell.swift */; };
+		7F95953D2E925FBE008A7B3D /* UserListViewController+UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95953C2E925FBE008A7B3D /* UserListViewController+UserCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +91,12 @@
 		7F9595252E916813008A7B3D /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
 		7F9595272E916DF4008A7B3D /* BookmarksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewModel.swift; sourceTree = "<group>"; };
 		7F95952B2E91A540008A7B3D /* BookmarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButton.swift; sourceTree = "<group>"; };
+		7F95952E2E925DBC008A7B3D /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		7F9595312E925ED0008A7B3D /* UserListViewController+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserListViewController+ViewModel.swift"; sourceTree = "<group>"; };
+		7F9595332E925F05008A7B3D /* UserListViewController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserListViewController+UITableView.swift"; sourceTree = "<group>"; };
+		7F9595352E925F5F008A7B3D /* UserListViewController+UISearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserListViewController+UISearchBar.swift"; sourceTree = "<group>"; };
+		7F95953A2E925FA1008A7B3D /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		7F95953C2E925FBE008A7B3D /* UserListViewController+UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserListViewController+UserCell.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +244,7 @@
 		7F5AAEEC2E8F037C0080686D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				7F95952D2E925DAF008A7B3D /* Extensions */,
 				7F95952A2E91A533008A7B3D /* CustomViews */,
 			);
 			path = Utilities;
@@ -240,6 +253,8 @@
 		7F5AAEEF2E8F048C0080686D /* UserList */ = {
 			isa = PBXGroup;
 			children = (
+				7F9595372E925F7F008A7B3D /* Views */,
+				7F9595302E925EAA008A7B3D /* Extensions */,
 				7F9595142E915323008A7B3D /* ViewModel */,
 				7F5AAEF22E8F04A40080686D /* ViewController */,
 			);
@@ -339,6 +354,33 @@
 				7F95952B2E91A540008A7B3D /* BookmarkButton.swift */,
 			);
 			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		7F95952D2E925DAF008A7B3D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7F95952E2E925DBC008A7B3D /* UIView+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7F9595302E925EAA008A7B3D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7F9595312E925ED0008A7B3D /* UserListViewController+ViewModel.swift */,
+				7F9595332E925F05008A7B3D /* UserListViewController+UITableView.swift */,
+				7F9595352E925F5F008A7B3D /* UserListViewController+UISearchBar.swift */,
+				7F95953C2E925FBE008A7B3D /* UserListViewController+UserCell.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7F9595372E925F7F008A7B3D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7F95953A2E925FA1008A7B3D /* UserCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -476,22 +518,28 @@
 				7F9595212E916046008A7B3D /* UserDetailViewModel.swift in Sources */,
 				7F5AAEFA2E8F05080080686D /* BookmarksViewController.swift in Sources */,
 				7F5AAEF62E8F04C40080686D /* UserListViewController.swift in Sources */,
+				7F95952F2E925DBC008A7B3D /* UIView+Extensions.swift in Sources */,
 				7F5AAEEE2E8F04530080686D /* Coordinator.swift in Sources */,
 				7F9595262E916813008A7B3D /* LocalStorageManager.swift in Sources */,
 				7F5AAEF82E8F04EC0080686D /* UserDetailViewController.swift in Sources */,
 				7F5AAEFC2E8F052E0080686D /* AppCoordinator.swift in Sources */,
 				7F5AAEB82E8F02620080686D /* ViewController.swift in Sources */,
+				7F9595322E925ED0008A7B3D /* UserListViewController+ViewModel.swift in Sources */,
 				7F9595172E9155FB008A7B3D /* ProfileHeaderView.swift in Sources */,
 				7F5AAEFE2E8F054C0080686D /* UserListCoordinator.swift in Sources */,
+				7F95953D2E925FBE008A7B3D /* UserListViewController+UserCell.swift in Sources */,
 				7F95951D2E91567A008A7B3D /* InfoRowView.swift in Sources */,
 				7F5AAEB42E8F02620080686D /* AppDelegate.swift in Sources */,
 				7F5BD6CF2E8FA14000F09781 /* UserListViewModel.swift in Sources */,
 				7F9595192E915633008A7B3D /* AddressCardView.swift in Sources */,
 				7F5AAF072E8F10C90080686D /* RandomUserResponseModel.swift in Sources */,
+				7F95953B2E925FA1008A7B3D /* UserCell.swift in Sources */,
 				7F5AAF022E8F10530080686D /* Endpoint.swift in Sources */,
+				7F9595342E925F05008A7B3D /* UserListViewController+UITableView.swift in Sources */,
 				7F5AAEB62E8F02620080686D /* SceneDelegate.swift in Sources */,
 				7F5AAF042E8F10720080686D /* APIClient.swift in Sources */,
 				7F95952C2E91A540008A7B3D /* BookmarkButton.swift in Sources */,
+				7F9595362E925F5F008A7B3D /* UserListViewController+UISearchBar.swift in Sources */,
 				7F95951B2E915658008A7B3D /* ContactCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
