@@ -11,6 +11,11 @@ import UIKit
 final class ImageCache {
     static let shared = ImageCache()
     private let cache = NSCache<NSURL, UIImage>()
+    
+    private let placeholderImage: UIImage = {
+        let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .light)
+        return UIImage(systemName: "person.circle.fill", withConfiguration: config) ?? UIImage()
+    }()
 
     private init() {}
 
@@ -20,13 +25,20 @@ final class ImageCache {
             return
         }
 
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data, let image = UIImage(data: data) else {
-                completion(nil)
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data,
+                  error == nil,
+                  let image = UIImage(data: data) else {
+                DispatchQueue.main.async {
+                    completion(self.placeholderImage)
+                }
                 return
             }
+            
             self.cache.setObject(image, forKey: url as NSURL)
-            DispatchQueue.main.async { completion(image) }
+            DispatchQueue.main.async {
+                completion(image)
+            }
         }.resume()
     }
 }
