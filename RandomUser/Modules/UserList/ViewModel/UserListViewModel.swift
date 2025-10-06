@@ -10,6 +10,7 @@ protocol UserListViewModelProtocol: AnyObject {
     func updateList(with users: [User])
     func addNewUsers(with newUsers: [User])
     func changedUserBookmarkStatus(for user: User, in indexPath: IndexPath)
+    func didFail(with error: String)
 }
 
 final class UserListViewModel {
@@ -41,6 +42,7 @@ final class UserListViewModel {
             let response: RandomUserResponseModel = try await apiClient.request(endpoint: .randomUsers(page: currentPage, results: 25))
             updateView(with: response.results)
         } catch {
+            delegate?.didFail(with: error.localizedDescription)
             print("Error: \(error.localizedDescription)")
         }
     }

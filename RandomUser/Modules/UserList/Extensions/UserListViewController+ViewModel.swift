@@ -43,5 +43,9 @@ extension UserListViewController: UserListViewModelProtocol {
         }
     }
     
+    func didFail(with error: String) {
+        showErrorPopup(message: error)
+    }
+    
     
 }
