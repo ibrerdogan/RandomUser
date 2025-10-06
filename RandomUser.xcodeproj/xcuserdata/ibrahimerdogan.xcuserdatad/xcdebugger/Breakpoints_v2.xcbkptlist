@@ -7,100 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "50F8CC38-4267-494B-B6A9-885D0D95596D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RandomUser/Networking/APIClient.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "request(endpoint:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B1765422-0D9A-405C-A4D7-5D16C8C2DC33"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RandomUser/Networking/APIClient.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "request(endpoint:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "B1765422-0D9A-405C-A4D7-5D16C8C2DC33 - 48b437e5a526ff43"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for RandomUser.APIClient.request&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(endpoint: RandomUser.Endpoint) async throws -&gt; &#x3c4;_0_0"
-                  moduleName = "RandomUser"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ibrahimerdogan/Desktop/RandomUser/RandomUser/Networking/APIClient.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "260">
-               </Location>
-               <Location
-                  uuid = "B1765422-0D9A-405C-A4D7-5D16C8C2DC33 - 82fe072dfe709e09"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for RandomUser.APIClient.request&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(endpoint: RandomUser.Endpoint) async throws -&gt; &#x3c4;_0_0"
-                  moduleName = "RandomUser"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ibrahimerdogan/Desktop/RandomUser/RandomUser/Networking/APIClient.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  uuid = "B1765422-0D9A-405C-A4D7-5D16C8C2DC33 - dd2263400f7f3341"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for RandomUser.APIClient.request&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(endpoint: RandomUser.Endpoint) async throws -&gt; &#x3c4;_0_0"
-                  moduleName = "RandomUser"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ibrahimerdogan/Desktop/RandomUser/RandomUser/Networking/APIClient.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "184">
-               </Location>
-               <Location
-                  uuid = "B1765422-0D9A-405C-A4D7-5D16C8C2DC33 - 2b69756e5a68d540"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for RandomUser.APIClient.request&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(endpoint: RandomUser.Endpoint) async throws -&gt; &#x3c4;_0_0"
-                  moduleName = "RandomUser"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ibrahimerdogan/Desktop/RandomUser/RandomUser/Networking/APIClient.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "96">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9A8762E5-6F68-4ED6-BCD4-EC046F85C665"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -224,6 +130,22 @@
                   offsetFromSymbolStart = "600">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0920AF7C-28A9-4707-9570-59E2F06F95D8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RandomUser/Coordinators/BookmarksCoordinator.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "showUserDetail(user:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

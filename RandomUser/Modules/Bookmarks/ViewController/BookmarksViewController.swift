@@ -8,7 +8,6 @@
 import UIKit
 
 final class BookmarksViewController: UIViewController {
-    weak var coordinator: BookmarksCoordinator?
     var viewModel: BookmarksViewModel
     
     private lazy var userListTableView: UITableView = {
@@ -30,8 +29,7 @@ final class BookmarksViewController: UIViewController {
         return imageView
     }()
     
-    init(coordinator: BookmarksCoordinator? = nil, viewModel: BookmarksViewModel) {
-        self.coordinator = coordinator
+    init(viewModel: BookmarksViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
@@ -47,8 +45,16 @@ final class BookmarksViewController: UIViewController {
     override func viewDidLoad() {
         title = "Bookmarks"
         view.backgroundColor = .white
+        reloadTableView()
+        addComponents()
+        configureLayout()
+    }
+    
+    private func addComponents() {
         view.addSubviews([userListTableView, noBookmarkPersonImage])
-        userListTableView.reloadData()
+    }
+    
+    private func configureLayout() {
         NSLayoutConstraint.activate([
             
             noBookmarkPersonImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
@@ -99,7 +105,7 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        coordinator?.showUserDetail(user: viewModel.getUser(for: indexPath))
+        viewModel.coordinator?.showUserDetail(user: viewModel.getUser(for: indexPath))
     }
     
 }
