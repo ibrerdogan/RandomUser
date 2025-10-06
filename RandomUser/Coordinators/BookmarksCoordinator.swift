@@ -20,7 +20,7 @@ class BookmarksCoordinator: Coordinator {
     func start() {
         let viewModel = BookmarksViewModel(localStorageManager: localStorageManager)
         let vc = BookmarksViewController(viewModel: viewModel)
-        vc.coordinator = self
+        vc.viewModel.coordinator = self
         navigationController.pushViewController(vc, animated: false)
     }
     

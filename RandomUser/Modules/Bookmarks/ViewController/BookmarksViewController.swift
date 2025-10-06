@@ -9,7 +9,7 @@ import UIKit
 
 final class BookmarksViewController: UIViewController {
     weak var coordinator: BookmarksCoordinator?
-    private var viewModel: BookmarksViewModel
+    var viewModel: BookmarksViewModel
     
     private lazy var userListTableView: UITableView = {
         let tableView = UITableView()
