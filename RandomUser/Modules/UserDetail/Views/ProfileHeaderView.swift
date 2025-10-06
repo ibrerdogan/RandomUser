@@ -59,10 +59,7 @@ final class ProfileHeaderView: UIView {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setupViews()
-        loadImage(from: user.picture.large)
-        nameLabel.text = "\(user.name.first) \(user.name.last)"
-        memberSinceLabel.text = "Member since: \(user.registered.date.formattedDateString() )"
-
+        configureViews(for: user)
     }
     
     required init?(coder: NSCoder) {
@@ -87,6 +84,12 @@ final class ProfileHeaderView: UIView {
             avatarImageView.widthAnchor.constraint(equalToConstant: 100),
             avatarImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
+    }
+    
+    private func configureViews(for user: User) {
+        loadImage(from: user.picture.large)
+        nameLabel.text = "\(user.name.first) \(user.name.last)"
+        memberSinceLabel.text = "Member since: \(user.registered.date.formattedDateString() )"
     }
     
     private func loadImage(from urlString: String) {

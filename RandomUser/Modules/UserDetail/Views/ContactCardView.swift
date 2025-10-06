@@ -33,11 +33,7 @@ final class ContactCardView: UIView {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setupViews()
-        
-        let emailRow = InfoRowView(iconSystemName: "envelope", title: "Email", detail: user.email, showsSeparator: true)
-        let phoneRow = InfoRowView(iconSystemName: "phone", title: "Phone", detail: user.cell, showsSeparator: false)
-        rowsStack.addArrangedSubview(emailRow)
-        rowsStack.addArrangedSubview(phoneRow)
+        configureViews(for: user)
     }
     required init?(coder: NSCoder) { fatalError() }
     
@@ -56,5 +52,12 @@ final class ContactCardView: UIView {
             rowsStack.trailingAnchor.constraint(equalTo: cardView.trailingAnchor),
             rowsStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor)
         ])
+    }
+    
+    private func configureViews(for user: User) {
+        let emailRow = InfoRowView(iconSystemName: "envelope", title: "Email", detail: user.email, showsSeparator: true)
+        let phoneRow = InfoRowView(iconSystemName: "phone", title: "Phone", detail: user.cell, showsSeparator: false)
+        rowsStack.addArrangedSubview(emailRow)
+        rowsStack.addArrangedSubview(phoneRow)
     }
 }

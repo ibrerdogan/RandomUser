@@ -10,7 +10,7 @@ import MapKit
 
 final class MapViewContainer: UIView {
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Location"
         label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
@@ -18,7 +18,7 @@ final class MapViewContainer: UIView {
         return label
     }()
     
-    private let mapView: MKMapView = {
+    private lazy var  mapView: MKMapView = {
         let map = MKMapView()
         map.layer.cornerRadius = 12
         map.clipsToBounds = true
@@ -27,7 +27,7 @@ final class MapViewContainer: UIView {
         return map
     }()
     
-    private let stackView: UIStackView = {
+    private lazy var  stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 8
