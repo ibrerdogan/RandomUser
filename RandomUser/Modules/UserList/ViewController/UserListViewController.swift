@@ -19,6 +19,7 @@ final class UserListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
+        tableView.keyboardDismissMode = .onDrag
         return tableView
     }()
     
@@ -56,6 +57,7 @@ final class UserListViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        hideKeyboardWhenTappedAround()
         configureView()
         activityIndicator.startAnimating()
         Task{
