@@ -35,16 +35,13 @@ final class UserListViewModel {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func fetchUsers() {
+    func fetchUsers() async {
         debugPrint("fetching")
-        apiClient.request(endpoint: .randomUsers(page: currentPage)) { [weak self] (result: Result<RandomUserResponseModel, Error>) in
-            guard let strongSelf = self else {return}
-            switch result {
-            case .success(let response):
-                strongSelf.updateView(with: response.results)
-            case .failure(let error):
-                print("Error: \(error.localizedDescription)")
-            }
+        do {
+            let response: RandomUserResponseModel = try await apiClient.request(endpoint: .randomUsers(page: currentPage, results: 25))
+            updateView(with: response.results)
+        } catch {
+            print("Error: \(error.localizedDescription)")
         }
     }
     
@@ -67,9 +64,9 @@ final class UserListViewModel {
         loadingMore = false
     }
     
-    func loadMoreUsers() {
+    func loadMoreUsers() async {
         loadingMore = true
-        fetchUsers()
+        await fetchUsers()
     }
     
     func getUserCount() -> Int {

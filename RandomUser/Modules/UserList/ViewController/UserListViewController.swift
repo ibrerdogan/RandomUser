@@ -26,6 +26,7 @@ final class UserListViewController: UIViewController {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.hidesWhenStopped = true
+        indicator.tintColor = .gray
         return indicator
     }()
     
@@ -56,7 +57,9 @@ final class UserListViewController: UIViewController {
     
     override func viewDidLoad() {
         configureView()
-        viewModel.fetchUsers()
+        Task{
+            await viewModel.fetchUsers()
+        }
         addComponents()
         configureLayout()
        
@@ -92,7 +95,9 @@ final class UserListViewController: UIViewController {
         guard viewModel.checkCanLoadMore() else {return}
         userListTableView.tableFooterView = footerActivityIndicator
         footerActivityIndicator.startAnimating()
-        viewModel.loadMoreUsers()
+        Task {
+            await viewModel.loadMoreUsers()
+        }
     }
     
 }

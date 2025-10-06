@@ -7,42 +7,42 @@
 
 import Foundation
 
+enum APIError: Error {
+    case invalidURL
+    case invalidResponse
+    case noData
+    case decodingError(Error)
+    case networkError(Error)
+}
+
 final class APIClient {
-    private let session = URLSession.shared
+    private let session: URLSession
     
-    func request<T: Codable>(
-        endpoint: Endpoint,
-        completion: @escaping (Swift.Result<T, Error>) -> Void
-    ) {
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+    
+    func request<T: Decodable>(endpoint: Endpoint) async throws -> T {
         guard let url = endpoint.url else {
-            completion(.failure(NSError(domain: "Invalid URL", code: -1, userInfo: nil)))
-            return
+            throw APIError.invalidURL
         }
         
-        let task = session.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
+        do {
+            let (data, response) = try await session.data(from: url)
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                completion(.failure(NSError(domain: "Invalid Response", code: -2, userInfo: nil)))
-                return
+                throw APIError.invalidResponse
             }
             
-            guard let data = data else {
-                completion(.failure(NSError(domain: "No Data", code: -3, userInfo: nil)))
-                return
-            }
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
             
-            do {
-                let decoded = try JSONDecoder().decode(T.self, from: data)
-                completion(.success(decoded))
-            } catch {
-                completion(.failure(error))
-            }
+            return try decoder.decode(T.self, from: data)
+        } catch let decodingError as DecodingError {
+            throw APIError.decodingError(decodingError)
+        } catch {
+            throw APIError.networkError(error)
         }
-        task.resume()
     }
 }
