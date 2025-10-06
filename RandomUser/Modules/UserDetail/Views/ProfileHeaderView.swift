@@ -61,7 +61,8 @@ final class ProfileHeaderView: UIView {
         setupViews()
         loadImage(from: user.picture.large)
         nameLabel.text = "\(user.name.first) \(user.name.last)"
-        memberSinceLabel.text = "Member since: \(formatDate(from: user.registered.date))"
+        memberSinceLabel.text = "Member since: \(user.registered.date.formattedDateString() )"
+
     }
     
     required init?(coder: NSCoder) {
@@ -93,21 +94,5 @@ final class ProfileHeaderView: UIView {
             ImageCache.shared.loadImage(from: url) { [weak self] image in
                 self?.avatarImageView.image = image
             }
-    }
-    
-    private func formatDate(from dateString: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-        inputFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-    
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "dd.MM.yyyy"
-        
-        guard let date = inputFormatter.date(from: dateString) else {
-            return ""
-        }
-        
-        return outputFormatter.string(from: date)
     }
 }
