@@ -6,10 +6,17 @@
 //
 
 import Foundation
+import CoreLocation
 
 final class UserDetailViewModel {
     private var localStorageManager: LocalStorageManager
-    var user: User
+    private(set) var user: User
+    
+    var coordinate: CLLocationCoordinate2D? {
+            guard let lat = Double(user.location.coordinates.latitude),
+                  let lon = Double(user.location.coordinates.longitude) else { return nil }
+            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        }
     
     init(user: User, localStorageManager: LocalStorageManager) {
         self.user = user
@@ -22,11 +29,15 @@ final class UserDetailViewModel {
         return (latitude, longitude)
     }
     
+    func getUser() -> User {
+        user
+    }
+    
     func isBookmarked() -> Bool {
         localStorageManager.userExists(for: user)
     }
     
-    func manageBookmark() {
+    func toggleBookmark() {
         localStorageManager.manageUserBookMark(for: user)
     }
 }

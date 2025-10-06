@@ -33,7 +33,7 @@ final class UserDetailViewController: UIViewController {
     }()
     
     private lazy var headerView: ProfileHeaderView = {
-        let headerView = ProfileHeaderView(user: viewModel.user)
+        let headerView = ProfileHeaderView(user: viewModel.getUser())
         headerView.translatesAutoresizingMaskIntoConstraints = false
         return headerView
     }()
@@ -47,7 +47,7 @@ final class UserDetailViewController: UIViewController {
     }()
     
     private lazy var contactCard: ContactCardView = {
-        let contactCard = ContactCardView(user: viewModel.user)
+        let contactCard = ContactCardView(user: viewModel.getUser())
         contactCard.translatesAutoresizingMaskIntoConstraints = false
         return contactCard
     }()
@@ -68,7 +68,7 @@ final class UserDetailViewController: UIViewController {
     }()
     
     private lazy var addressCard: AddressCardView = {
-        let addressView = AddressCardView(with: viewModel.user)
+        let addressView = AddressCardView(with: viewModel.getUser())
         addressView.translatesAutoresizingMaskIntoConstraints = false
         return addressView
     }()
@@ -84,9 +84,6 @@ final class UserDetailViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
             
-        guard let latitude = viewModel.createCoordinaate().0, let longitude = viewModel.createCoordinaate().1 else {return}
-        mapViewContainer.configure(latitude: latitude,
-                                   longitude: longitude)
     }
     required init?(coder: NSCoder) { fatalError() }
     
@@ -96,6 +93,7 @@ final class UserDetailViewController: UIViewController {
         setupScrollAndStack()
         populateStack()
         setupNavigationBar()
+        configureMap()
     }
     
     private func setupNavigationBar() {
@@ -104,7 +102,7 @@ final class UserDetailViewController: UIViewController {
         
         bookmarkButton.onTap = { [weak self] isBookmarked in
             guard let strongSelf = self else {return}
-            strongSelf.viewModel.manageBookmark()
+            strongSelf.viewModel.toggleBookmark()
             
         }
     }
@@ -144,6 +142,12 @@ final class UserDetailViewController: UIViewController {
         
         contentStack.addArrangedSubview(mapViewContainer)
         
+    }
+    
+    private func configureMap() {
+        guard let coordinate = viewModel.coordinate else { return }
+        mapViewContainer.configure(latitude: coordinate.latitude,
+                                    longitude: coordinate.longitude)
     }
 
 }
