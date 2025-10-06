@@ -37,7 +37,7 @@ final class UserListViewController: UIViewController {
         return searchBar
     }()
     
-    private lazy var footerActivityIndicator: UIActivityIndicatorView = {
+    lazy var footerActivityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
         indicator.frame = CGRect(x: 0, y: 0, width: userListTableView.bounds.width, height: 44)
         indicator.hidesWhenStopped = true
@@ -53,6 +53,7 @@ final class UserListViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func viewDidLoad() {
         configureView()
         viewModel.fetchUsers()

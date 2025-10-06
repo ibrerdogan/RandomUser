@@ -90,14 +90,9 @@ final class ProfileHeaderView: UIView {
     
     private func loadImage(from urlString: String) {
         guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let data = data, error == nil else { return }
-            
-            DispatchQueue.main.async {
-                self?.avatarImageView.image = UIImage(data: data)
+            ImageCache.shared.loadImage(from: url) { [weak self] image in
+                self?.avatarImageView.image = image
             }
-        }.resume()
     }
     
     private func formatDate(from dateString: String) -> String {

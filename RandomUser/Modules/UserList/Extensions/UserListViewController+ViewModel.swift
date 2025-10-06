@@ -7,6 +7,7 @@
 
 import Foundation
 extension UserListViewController: UserListViewModelProtocol {
+    
     func changedUserBookmarkStatus(for user: User, in indexPath: IndexPath) {
         if let cell = userListTableView.cellForRow(at: indexPath) as? UserCell {
             cell.configure(with: user, bookmarked: viewModel.isBookmarked(for: indexPath))
@@ -29,6 +30,7 @@ extension UserListViewController: UserListViewModelProtocol {
             }) {[weak self] status in
                 guard let strongSelf = self else {return}
                 strongSelf.viewModel.completedLoadingMore()
+                strongSelf.footerActivityIndicator.stopAnimating()
             }
         }
     }
