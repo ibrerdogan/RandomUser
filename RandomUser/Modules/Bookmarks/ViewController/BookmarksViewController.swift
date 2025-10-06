@@ -23,11 +23,19 @@ final class BookmarksViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var noBookmarkPersonImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "noBookmarkedImage"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
     init(coordinator: BookmarksCoordinator? = nil, viewModel: BookmarksViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
+        handleNoBookmarkedUserImageView(isHidden: false)
     }
     
     
@@ -39,14 +47,40 @@ final class BookmarksViewController: UIViewController {
     override func viewDidLoad() {
         title = "Bookmarks"
         view.backgroundColor = .white
-        view.addSubview(userListTableView)
+        view.addSubviews([userListTableView, noBookmarkPersonImage])
         userListTableView.reloadData()
         NSLayoutConstraint.activate([
+            
+            noBookmarkPersonImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            noBookmarkPersonImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            noBookmarkPersonImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            noBookmarkPersonImage.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            
             userListTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            userListTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            userListTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            userListTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            userListTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             userListTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+    
+    private func reloadTableView() {
+        DispatchQueue.main.async {[weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.userListTableView.reloadData()
+            strongSelf.checkBookmarkedUserCount()
+        }
+    }
+    
+    private func checkBookmarkedUserCount() {
+        handleNoBookmarkedUserImageView(isHidden: !(viewModel.getUserCount() == 0))
+    }
+    
+    private func handleNoBookmarkedUserImageView(isHidden: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.noBookmarkPersonImage.isHidden = isHidden
+            strongSelf.userListTableView.isHidden = !isHidden
+        }
     }
 }
 
@@ -73,18 +107,12 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
 extension BookmarksViewController: UserCellProtocol {
     func bookmarkTapped(for user: User) {
         viewModel.manageUserBookMark(for: user)
-        DispatchQueue.main.async {[weak self] in
-            guard let strongSelf = self else {return}
-            strongSelf.userListTableView.reloadData()
-        }
+        reloadTableView()
     }
 }
 
 extension BookmarksViewController: BookmarksViewModelProtocol {
     func updateUI() {
-        DispatchQueue.main.async {[weak self] in
-            guard let strongSelf = self else {return}
-            strongSelf.userListTableView.reloadData()
-        }
+        reloadTableView()
     }
 }
