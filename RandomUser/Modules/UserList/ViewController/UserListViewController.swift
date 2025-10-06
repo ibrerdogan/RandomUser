@@ -22,7 +22,7 @@ final class UserListViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
+    lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.hidesWhenStopped = true
@@ -57,6 +57,7 @@ final class UserListViewController: UIViewController {
     
     override func viewDidLoad() {
         configureView()
+        activityIndicator.startAnimating()
         Task{
             await viewModel.fetchUsers()
         }
